@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package blackjackgame;
 import java.util.*;
 /**
@@ -20,53 +15,67 @@ public class BlackjackGame {
         String answer;
         char yesNo;
         int hand = 0;
-        
+        int card = 0;
+        int total = 0;
+        char hit;
         //introduce the game
         System.out.println("Let's play Blackjack!");
-        //ask if wants to play
-        System.out.println("Would you like to play? (y/n): ");
-        answer = input.nextLine();
-        yesNo = answer.charAt(0);
         
-        while(yesNo == 'y'){
-            while(hand <= 21){
-                int card;
-                int total = 0;
-                
+        do{
+            do{
                 //provide user with first card, then display
                 card = random.nextInt(11);
-                total += card;  //start aggregating the cards
-                System.out.println("Your first card is: " + card);
-                
-                //provide user with the second card, then display
+            } while (card==0);
+            hand += card;
+            System.out.println("Your first card is: " + card);
+
+            do{
                 card = random.nextInt(11);
-                total += card;  //aggregating cards
-                System.out.println("Your second card is: " + card);
-                System.out.println("Both cards total: " + total);
-                
-                System.out.println("");
-                System.out.println("Would you like to hit or stay? (h/s)");
-                answer = input.nextLine();
-                yesNo = answer.charAt(0);
-                
-                if (yesNo == 'h'){
+            } while (card==0);
+            hand += card;
+            System.out.println("Your second card is: " + card);
+
+            System.out.println("This adds to: " + hand);
+            System.out.println("This is under 21 so far." +
+                                "Would you like to hit? (y/n)");
+            answer = input.nextLine();
+            hit = answer.charAt(0);
+
+            while (hand <= 21){
+                while(hit == 'y'){
+                    do{
                     card = random.nextInt(11);
-                    total += card;
-                    if (total > 21){
+                    } while (card == 0);
+
+                    hand += card;
+                    if (hand > 21){
+                        System.out.println("Your total is: " + hand);
                         System.out.println("BUST!");
+                        hit = 'n';
+
                     }
                     else {
-                        System.out.println("Cards total: " + total);
-                        System.out.println("Would you like to hit or stay? (h/s)");
+                        System.out.println("Card is: " + card);
+                        System.out.println("Your total is: " + hand);
+                        System.out.print("Hit again? ");
+                        answer = input.nextLine();
+                        hit = answer.charAt(0);
                     }
                 }
-                else {
-                    //thank you for playing
-                }
-              
-        }
+                hand += 21;
+            }         
+            System.out.print("Would you like to play again? (y/n) ");
+            answer = input.nextLine();
+            yesNo = answer.charAt(0);
+            if (yesNo == 'y'){
+                hand = 0;
+                card = 0;
+            }
+        }while (yesNo == 'y');  
+        
+        System.out.println("Thanks for playing!");
+        System.exit(0);
     
-        }
     }
-    
 }
+ 
