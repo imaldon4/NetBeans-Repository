@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;     //import JOptionPane class library
  * @author Ike Maldonado
  */
 public class NumberGuesser {
-
     /**
      * @param args the command line arguments
      * This will be the main method.
@@ -29,83 +28,88 @@ public class NumberGuesser {
      * There should be three conditions: high, low, and correct. These 
      * will be captured as loops.
      */
-    
     public static void playOneGame(){
-        //No arguments passed through playOneGame, hence empty ();
+        //introduce program
+        JOptionPane.showMessageDialog(null, "Welcome! I will guess " +
+                "the number you're thinking of.");
         
-        //display game intro
-        //capture user input
-        //loop if not correct
-        //once correct ask to play again
-        //exit program
-        int response;
+        JOptionPane.showMessageDialog(null, "Think of any number from 1 to 100.\n" +
+                "I bet I can guess it!");
+        
+        
         String input;
-
-        //invoke getUserResponse Method
-        response = getUserResponseToGuess();
-
-        //Validate converted input within domain of 1 and 100
+        char response;
+        int highPoint = 100; //initialize high and low points
+        int lowPoint = 1;
+        int answer;
+        answer = getMidpoint(lowPoint, highPoint); //create first midpoint
+        
+        
         do{
-            if(response >= 1 && response <= 100){
-
-                //proceed to game method
+            
+            response = getUserResponseToGuess(answer);
+            if(response == 'l'){
+               answer = getMidpoint(highPoint, answer);
+               
+            }else if (response == 'h'){
+                answer = getMidpoint(lowPoint, answer);
                 
+            }else if (response == 'c'){
+                JOptionPane.showMessageDialog(null, "The number you're thinking of is: " + answer);
                 
-
-            } else{
-                input = JOptionPane.showInputDialog("Out of range, please choose another number: ");
-                response = Integer.parseInt(input);
+            }else{
+                JOptionPane.showMessageDialog(null, "Invalid answer");
             }
-        }while(response < 1 && response > 100);
-        
-        
+        }while(response != 'c');
     }
     
-    /**
-         * @param none This method will take the user's response 
-         * and assign it to a variable response
-         * @return response
-         */
-        public static char getUserResponseToGuess(){
-            String input;
-            char convert;
-            
-            Random rand = new Random(midpoint());
-
-            //Display game introduction and request input
-            JOptionPane.showMessageDialog(null, "Welcome! This game will guess" +
-                    " the number you're thinking of.");
-            input = JOptionPane.showInputDialog("Is it: " + rand + "?");
-            //convert string input to integer
-            convert = input.charAt(0);
-            //return an integer value corresponding to what the user entered
-            return convert;          
-        }
-    
-    /**
-     * @param Num   This is the convert number
-     * 
-     * This is the primary body of calculation for the game
+/**
+     * @param none This method will take the user's response 
+     * and assign it to a variable response
+     * @return response
      */
-    public static void game(int, Num){
-        char higher = 'h';
-        char lower = 'l';
-        char correct = 'c';
+    public static char getUserResponseToGuess(int guess){
+        char userInput;
+        String input;
+        int passGuess = guess;
+        //invoke getUserResponse Method
+                    //confirm
+            input = JOptionPane.showInputDialog("Is it: " + passGuess + "(h/l/c)");
+            //convert string input to integer
+            userInput = input.charAt(0);
+            //return an integer value corresponding to what the user entered  
+        return userInput;          
+    }
+          
         
-        
-    }    
     /**
      * @param none or bool
-     * will return boolean value to original main method
+     * @return boolean This will return false if wants to play again
+     * 
      */
-    public static boolean shouldPlayAgain(char, value){
+    public static boolean shouldPlayAgain(){
         
         //enter break statments
-        case: 'n'
-        return false;
-        case: 'y'
-        return true;
-        default:
-        //print invalid answer and exit program
+        String answer;
+        answer = JOptionPane.showInputDialog("Would you like to pay again? (y/n)");
+        char confirm = answer.charAt(0);
+        
+        if(confirm == 'y'){
+            return false;
+        } else{
+            JOptionPane.showMessageDialog(null, "Bye");
+            return true;
+        }
+        
+    }
+    
+    public static int getMidpoint(int low, int high){
+        
+        int div;
+        
+        div = high - low;
+        return div;
+        
     }
 }
+   
